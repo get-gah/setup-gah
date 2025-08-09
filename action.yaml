@@ -55,7 +55,7 @@ runs:
       env:
         ACTION_PATH: ${{ github.action_path }}
       run: |
-	      echo "UNATTENDED=true" >> $GITHUB_ENV
+        echo "UNATTENDED=true" >> $GITHUB_ENV
 
         GAH_CACHE_DIR="$ACTION_PATH/.cache"
         echo "GAH_CACHE_DIR=$GAH_CACHE_DIR" >> $GITHUB_ENV
