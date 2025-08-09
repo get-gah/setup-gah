@@ -72,5 +72,5 @@ runs:
       env:
         TAG: ${{ steps.version.outputs.tag }}
       run: |
-        curl -sL https://raw.githubusercontent.com/marverix/gah/refs/tags/$tag/gah -o gah
-        chmod +x gah
+        curl -sL https://raw.githubusercontent.com/marverix/gah/refs/tags/$tag/gah -o "$GAH_INSTALL_DIR/gah"
+        chmod +x "$GAH_INSTALL_DIR/gah"
