@@ -1,0 +1,66 @@
+name: Setup gah
+description: GitHub Action that setups gah
+
+author: marverix
+
+branding:
+  icon: package
+  color: yellow
+
+inputs:
+  version:
+    description: gah version to install
+    default: latest
+
+runs:
+  using: composite
+  steps:
+    - name: Check valid OS
+      if: runner.os == 'Windows'
+      shell: powershell
+      run: |
+        Write-Host "::error title=OS Not Supported::gah does not support Windows OS."
+        exit 1
+
+    - name: Check pre-requisites
+      shell: bash
+      run: |
+        if [ "${BASH_VERSINFO[0]}" -lt 4 ]; then
+          echo "::error title=Pre-requisite failed::Bash 4.0 or higher is required"
+          exit 1
+        fi
+
+        required_commands=(tar unzip curl jq)
+        for cmd in "${required_commands[@]}"; do
+          if ! command -v "$cmd" &> /dev/null; then
+            echo "::error title=Pre-requisite failed::$cmd is not installed"
+            exit 1
+          fi
+        done
+
+    - name: Check version
+      id: version
+      shell: bash
+      env:
+        TAG: ${{ inputs.version }}
+      run: |
+        if [ "$TAG" == "latest" ]; then
+          TAG=$(curl -s https://api.github.com/repos/marverix/gah/releases/latest | jq -r '.tag_name')
+        fi
+
+        echo "tag=$TAG" >> $GITHUB_OUTPUT
+
+    - name: Prepare environment
+      shell: bash
+      env:
+        ACTION_PATH: ${{ github.action_path }}
+      run: |
+        echo "PATH=$ACTION_PATH:$PATH" >> $GITHUB_ENV
+
+    - name: Download gah
+      shell: bash
+      env:
+        TAG: ${{ steps.version.outputs.tag }}
+      run: |
+        curl -sL https://raw.githubusercontent.com/marverix/gah/refs/tags/$tag/gah -o gah
+        chmod +x gah
