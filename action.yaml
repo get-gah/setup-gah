@@ -16,7 +16,7 @@ runs:
   using: composite
   steps:
     - name: Check valid OS
-      if: runner.os == 'Windows'
+      if: ${{ runner.os == 'Windows' }}
       shell: powershell
       run: |
         Write-Host "::error title=OS Not Supported::gah does not support Windows OS."
