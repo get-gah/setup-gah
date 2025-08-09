@@ -55,7 +55,17 @@ runs:
       env:
         ACTION_PATH: ${{ github.action_path }}
       run: |
-        echo "PATH=$ACTION_PATH:$PATH" >> $GITHUB_ENV
+	      echo "UNATTENDED=true" >> $GITHUB_ENV
+
+        GAH_CACHE_DIR="$ACTION_PATH/.cache"
+        echo "GAH_CACHE_DIR=$GAH_CACHE_DIR" >> $GITHUB_ENV
+        mkdir -p "$GAH_CACHE_DIR"
+
+        GAH_INSTALL_DIR="$ACTION_PATH/.bin"
+        echo "GAH_INSTALL_DIR=$GAH_INSTALL_DIR" >> $GITHUB_ENV
+        mkdir -p "$GAH_INSTALL_DIR"
+
+        echo "PATH=$GAH_INSTALL_DIR:$PATH" >> $GITHUB_ENV
 
     - name: Download gah
       shell: bash
