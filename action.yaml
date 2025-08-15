@@ -67,6 +67,10 @@ runs:
 
         echo "PATH=$GAH_INSTALL_DIR:$PATH" >> $GITHUB_ENV
 
+        if [[ -n "$RUNNER_DEBUG" ]]; then
+          echo "GAH_DEBUG=true" >> $GITHUB_ENV
+        fi
+
     - name: Download gah
       shell: bash
       env:
