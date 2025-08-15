@@ -1,6 +1,6 @@
 # setup-gah
 
-This is simple GitHub Action that setups [gah](https://github.com/marverix/gah) - an GitHub Releases app installer, that DOES NOT REQUIRE SUDO!
+Composite GitHub Action that setups [gah](https://github.com/marverix/gah) - an GitHub Releases app installer, that DOES NOT REQUIRE SUDO!
 
 ## Usage
 
@@ -10,8 +10,11 @@ This is simple GitHub Action that setups [gah](https://github.com/marverix/gah) 
   with:
     version: latest # optional, default is latest
 
-- name: Install helm
-  run: gah install helm
+- name: Install genact
+  run: gah install genact
+
+- name: List of available genact modules
+  run: genact -l
 ```
 
 ## Inputs
