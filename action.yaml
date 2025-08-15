@@ -72,12 +72,5 @@ runs:
       env:
         TAG: ${{ steps.version.outputs.tag }}
       run: |
-        curl -sL https://raw.githubusercontent.com/marverix/gah/refs/tags/$tag/gah -o "$GAH_INSTALL_DIR/gah"
+        curl -sL --fail-with-body https://raw.githubusercontent.com/marverix/gah/refs/tags/${TAG}/gah -o "$GAH_INSTALL_DIR/gah"
         chmod +x "$GAH_INSTALL_DIR/gah"
-
-    - name: Pin bash shebang
-      shell: bash
-      run: |
-        bash_location=$(which bash)
-        bash_location="#\!${bash_location}"
-        sed -i "1 s|.*|$bash_location|" "$GAH_INSTALL_DIR/gah"
