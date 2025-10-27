@@ -6,7 +6,7 @@ Composite GitHub Action that setups [gah](https://github.com/marverix/gah) - an 
 
 ```yaml
 - name: Setup gah
-  uses: marverix/setup-gah@v1
+  uses: get-gah/setup-gah@v1
   with:
     version: latest # optional, default is latest
 
